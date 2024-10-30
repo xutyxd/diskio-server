@@ -1,0 +1,12 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "rootDir": "../../src/package",
+        "outDir": "../../package/mjs",
+        "module": "es6",
+        "target": "es2019"
+    },
+    "include": [
+        "../../src/package",
+    ],
+}

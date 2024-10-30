@@ -1,0 +1,1 @@
+export { IEntityRepository } from "./entity-repository.interface";

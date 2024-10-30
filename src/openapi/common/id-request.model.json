@@ -1,0 +1,11 @@
+{
+    "type": "object",
+    "required": [ "uuid" ],
+    "properties": {
+        "uuid": {
+            "type": "string",
+            "example": "f0a6f400-be55-42ae-9545-1bcba9b69b99"
+        }
+    }
+}
+   

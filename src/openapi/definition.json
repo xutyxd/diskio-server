@@ -1,0 +1,32 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Crosscutting API",
+        "summary": "A boilerplate for building contract-first APIs in TypeScript with OpenAPI. Includes OpenAPI definition, compliant server setup, and npm package generation for seamless API development.",
+        "version": "0.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://localhost:8080",
+            "description": "Production server"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Crosscutting",
+            "description": "Operation related to a crosscutting actions"
+        }
+    ],
+    "paths": {
+        "/health-check": {
+            "$ref": "./crosscutting/health-check/paths/health-check.path.json"
+        }
+    },
+    "components": {
+        "schemas": {
+            "id-request.model": {
+                "$ref": "./common/id-request.model.json"
+            }
+        }
+    }
+}

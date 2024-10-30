@@ -1,0 +1,34 @@
+{
+    "get": {
+        "tags": [ "Crosscutting" ],
+        "summary": "Health check endpoint",
+        "responses": {
+            "200": {
+                "description": "Correct response indicating that the server is alive",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "example": {
+                                "$ref": "../examples/health-check.example.json"
+                            },
+                            "allOf": [
+                                {
+                                    "$ref": "../../../common/response.model.json"
+                                },
+                                {
+                                    "type": "object",
+                                    "required": ["data"],
+                                    "properties": {
+                                        "data": {
+                                            "type": "number"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

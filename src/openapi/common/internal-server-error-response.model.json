@@ -1,0 +1,21 @@
+{
+    "allOf": [
+        {
+            "$ref": "./response.model.json"
+        },
+        {
+            "type": "object",
+            "required": ["response"],
+            "properties": {
+                "response": {
+                    "type": "string",
+                    "example": "Internal server error"
+                },
+                "code": {
+                    "type": "number",
+                    "example": 500
+                }
+            }
+        }
+    ]
+}

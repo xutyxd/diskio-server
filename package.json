@@ -1,0 +1,74 @@
+{
+  "name": "ts-openapi-contract-first-boilerplate",
+  "version": "1.0.0",
+  "description": "A boilerplate for building contract-first APIs in TypeScript with OpenAPI. Includes OpenAPI definition, compliant server setup, and npm package generation for seamless API development.",
+  "scripts": {
+    "tsc": "tsc --noEmit",
+    "entity:scaffold": "sh ./scripts/schematics/entity-scaffolding.sh",
+    "openapi:bundle": "redocly bundle src/openapi/definition.json --output src/openapi/specification.json",
+    "openapi:docs": "redocly build-docs src/openapi/specification.json --output public/index.html",
+    "openapi:types": "openapi-typescript src/openapi/specification.json -o src/openapi/specification.d.ts",
+    "server:build:cjs": "rm -fr server/cjs/* && tsc -p ./configurations/server/tsconfig-cjs.json && sh ./scripts/server/cjs-formatter.sh",
+    "server:build:mjs": "rm -fr server/mjs/* && tsc -p ./configurations/server/tsconfig-mjs.json && sh ./scripts/server/mjs-formatter.sh",
+    "server:build": "npm run server:build:cjs && sh ./scripts/server/fixup.sh",
+    "package:build:cjs": "rm -fr package/cjs/* && tsc -p ./configurations/package/tsconfig-cjs.json && sh ./scripts/package/cjs-formatter.sh",
+    "package:build:mjs": "rm -fr package/mjs/* && tsc -p ./configurations/package/tsconfig-mjs.json && sh ./scripts/package/mjs-formatter.sh",
+    "package:build": "npm run package:build:cjs && npm run package:build:mjs && ./scripts/package/fixup.sh",
+    "start:local": "npm run server:build && node --env-file=.env ./server/cjs/index.js",
+    "start": "./server/cjs/index.js",
+    "clean": "npm prune --production",
+    "test:ts:server": "tsc --noEmit -p ./configurations/server/tsconfig-cjs.json",
+    "test:ts:package": "tsc --noEmit -p ./configurations/package/tsconfig-cjs.json",
+    "test:ts": "npm run test:ts:server && npm run test:ts:package",
+    "test:units": "node --test --require ts-node/register tests/units/**/**/*.spec.ts",
+    "test:units:coverage": "c8 npm run test:units",
+    "test:functionals": "cucumber-js tests/functionals"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xutyxd/ts-openapi-contract-first-boilerplate.git"
+  },
+  "author": "XutyXD",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xutyxd/ts-openapi-contract-first-boilerplate/issues"
+  },
+  "homepage": "https://github.com/xutyxd/ts-openapi-contract-first-boilerplate#readme",
+  "keywords": [
+    "typescript",
+    "ts",
+    "openapi-generator",
+    "openapi-generator-cli",
+    "openapi-generator-typescript-node",
+    "openapi",
+    "openapi3",
+    "contract-first",
+    "contract-first-api",
+    "boilerplate",
+    "boilerplate-api",
+    "boilerplate-openapi",
+    "boilerplate-openapi-api",
+    "typescript-openapi-boilerplate",
+    "typescript-openapi-boilerplate-api",
+    "typescript-openapi-contract-first-boilerplate",
+    "typescript-openapi-contract-first-boilerplate-api"
+],
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.3.1",
+    "@redocly/cli": "^1.9.0",
+    "@semantic-release/github": "^9.0.6",
+    "@semantic-release/npm": "^11.0.0",
+    "c8": "^9.1.0",
+    "openapi-typescript": "^7.4.1",
+    "semantic-release": "^22.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "inversify": "^6.0.2",
+    "openapi-fetch": "^0.12.0",
+    "reflect-metadata": "^0.2.2",
+    "server-over-express": "^1.6.1"
+  }
+}

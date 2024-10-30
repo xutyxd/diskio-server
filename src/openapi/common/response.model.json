@@ -1,0 +1,14 @@
+{
+    "type": "object",
+    "required": [ "code", "timestamp" ],
+    "properties": {
+        "code": {
+            "type": "number",
+            "example": "200"
+        },
+        "timestamp": {
+            "type": "number",
+            "example": "1707947871721"
+        }
+    }
+}

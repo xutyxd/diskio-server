@@ -1,0 +1,21 @@
+{
+    "allOf": [
+        {
+            "$ref": "./response.model.json"
+        },
+        {
+            "type": "object",
+            "required": ["response"],
+            "properties": {
+                "response": {
+                    "type": "string",
+                    "example": "Not found: Authorization header not found"
+                },
+                "code": {
+                    "type": "number",
+                    "example": 404
+                }
+            }
+        }
+    ]
+}

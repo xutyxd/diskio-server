@@ -1,0 +1,60 @@
+name: Server build
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'configurations/server/**'
+      - 'scripts/server/**'
+      - 'src/openapi/**'
+      - 'src/server/**'
+      - 'tests/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '21.6.2'
+
+      - name: Setup
+        run: |
+          npm install
+          npm ci --cache .npm
+        id: cache-deps
+      - name: Generate openapi
+        run: |
+          npm run openapi:bundle
+          npm run openapi:types
+
+      - name: Test types
+        run: |
+          npm run test:ts
+
+      - name: Units tests
+        run: |
+          npm run test:units:coverage
+
+      - name: Functional tests
+        run: |
+          npm run test:functionals
+
+      - name: Build server package
+        run: |
+          npm run server:build
+        id: cache-server-build
+
+      
