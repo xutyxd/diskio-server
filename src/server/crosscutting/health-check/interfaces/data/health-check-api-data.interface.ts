@@ -1,6 +1,7 @@
+import { DiskIO } from "diskio-core";
 import { IEntityAPIData } from "../../../common/interfaces/data";
 
-export interface IHealthCheckAPIData extends IEntityAPIData{
+export interface IHealthCheckAPIData extends IEntityAPIData {
     server: {
         name: string;
         memory: {
@@ -14,4 +15,6 @@ export interface IHealthCheckAPIData extends IEntityAPIData{
     };
     uptime: number;
     time: number;
+    disk: Awaited<ReturnType<DiskIO['information']['disk']>>;
+    diskio: Awaited<ReturnType<DiskIO['information']['diskio']>>;
 }

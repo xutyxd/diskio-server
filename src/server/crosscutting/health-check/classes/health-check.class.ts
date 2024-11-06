@@ -6,6 +6,8 @@ export class HealthCheck extends Entity implements IHealthCheck {
 
     public server;
     public uptime;
+    public disk;
+    public diskio;
 
     constructor(data: Partial<IHealthCheckData>) {
         super(data);
@@ -20,6 +22,8 @@ export class HealthCheck extends Entity implements IHealthCheck {
 
         this.server = data.server || { name: 'unknown', memory, version: '0.0.0' };
         this.uptime = data.uptime || 0;
+        this.disk = data.disk || { filesystem: 'unknown', size: 0, used: 0, available: 0, capacity: '0%', mount: 'unknown' };
+        this.diskio = data.diskio || { size: 0, used: 0, available: 0, capacity: '0%' };
     }
 
     public toApi() {
@@ -29,7 +33,9 @@ export class HealthCheck extends Entity implements IHealthCheck {
             ...base,
             server: this.server,
             uptime: this.uptime,
-            time: 0
+            time: 0,
+            disk: this.disk,
+            diskio: this.diskio
         };
     }
 
@@ -39,7 +45,9 @@ export class HealthCheck extends Entity implements IHealthCheck {
         return {
             ...base,
             server: this.server,
-            uptime: this.uptime
+            uptime: this.uptime,
+            disk: this.disk,
+            diskio: this.diskio
         };
     }
 
@@ -55,7 +63,17 @@ export class HealthCheck extends Entity implements IHealthCheck {
             server_memory_external: this.server.memory.external,
             server_memory_array_buffers: this.server.memory.arrayBuffers,
             server_version: this.server.version,
-            uptime: this.uptime
+            uptime: this.uptime,
+            disk_available: this.disk.available,
+            disk_capacity: this.disk.capacity,
+            disk_filesystem: this.disk.filesystem,
+            disk_mount: this.disk.mount,
+            disk_size: this.disk.size,
+            disk_used: this.disk.used,
+            diskio_available: this.diskio.available,
+            diskio_capacity: this.diskio.capacity,
+            diskio_size: this.diskio.size,
+            diskio_used: this.diskio.used,
         };
     }
 
@@ -79,7 +97,21 @@ export class HealthCheck extends Entity implements IHealthCheck {
                 },
                 version: entity.server_version
             },
-            uptime: entity.uptime
+            uptime: entity.uptime,
+            disk: {
+                filesystem: entity.disk_filesystem,
+                size: entity.disk_size,
+                used: entity.disk_used,
+                available: entity.disk_available,
+                capacity: entity.disk_capacity,
+                mount: entity.disk_mount
+            },
+            diskio: {
+                size: entity.diskio_size,
+                used: entity.diskio_used,
+                available: entity.diskio_available,
+                capacity: entity.diskio_capacity
+            }
         });
     }
 }

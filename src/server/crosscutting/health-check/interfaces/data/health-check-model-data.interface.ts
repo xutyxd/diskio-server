@@ -9,4 +9,14 @@ export interface IHealthCheckModelData extends IEntityModelData {
     server_memory_array_buffers: number;
     server_version: `${number}.${number}.${number}`;
     uptime: number;
+    disk_available: number;
+    disk_capacity: string;
+    disk_filesystem: string;
+    disk_mount: string;
+    disk_size: number;
+    disk_used: number;
+    diskio_available: number;
+    diskio_capacity: string;
+    diskio_size: number;
+    diskio_used: number;
 }

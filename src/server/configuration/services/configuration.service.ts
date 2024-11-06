@@ -6,6 +6,10 @@ export class ConfigurationService {
 
     private KEYS: { [K in 'oauth' | 'cookies' ]?: object };
 
+    private Diskio = {
+        path: process.env.DISKIO_PATH || './diskio',
+        size: process.env.DISKIO_SIZE ? parseInt(process.env.DISKIO_SIZE) : 1024 * 1024 * 1024 * 10
+    }
     public keys = {
         cookies: () => {
             const keys = (this.KEYS.cookies || []) as string[];
@@ -28,6 +32,11 @@ export class ConfigurationService {
             return structuredClone(this.KEYS.oauth || { });
         }
     }
+
+    public get diskio () {
+        return structuredClone(this.Diskio);
+    }
+
 
     constructor() {
         this.KEYS = {

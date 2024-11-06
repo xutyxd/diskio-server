@@ -7,6 +7,8 @@ export class HealthCheckAPI extends EntityAPI implements IHealthCheckAPI {
     public server;
     public uptime;
     public time;
+    public disk;
+    public diskio;
 
     constructor(data: IHealthCheckAPIData) {
         super(data);
@@ -14,6 +16,8 @@ export class HealthCheckAPI extends EntityAPI implements IHealthCheckAPI {
         this.server = data.server;
         this.uptime = data.uptime;
         this.time = data.time;
+        this.disk = data.disk;
+        this.diskio = data.diskio;
     }
 
     public toApi() {
@@ -23,7 +27,9 @@ export class HealthCheckAPI extends EntityAPI implements IHealthCheckAPI {
             ...base,
             server: this.server,
             uptime: this.uptime,
-            time: this.time
+            time: this.time,
+            disk: this.disk,
+            diskio: this.diskio
         };
     }
 
@@ -34,7 +40,9 @@ export class HealthCheckAPI extends EntityAPI implements IHealthCheckAPI {
             ...base,
             server: this.server,
             uptime: this.uptime,
-            time: this.time
+            time: this.time,
+            disk: this.disk,
+            diskio: this.diskio
         };
     }
 
