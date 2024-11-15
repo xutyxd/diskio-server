@@ -10,6 +10,7 @@ export class ConfigurationService {
         path: process.env.DISKIO_PATH || './diskio',
         size: process.env.DISKIO_SIZE ? parseInt(process.env.DISKIO_SIZE) : 1024 * 1024 * 1024 * 10
     }
+
     public keys = {
         cookies: () => {
             const keys = (this.KEYS.cookies || []) as string[];
