@@ -26,6 +26,7 @@ describe('HealthCheckController', () => {
 
                 instance = new HealthCheckController(service);
             } catch (e) {
+                console.log('Error on test: ', e);
                 instance = e as Error;
             }
 
