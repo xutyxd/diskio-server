@@ -3,13 +3,13 @@ import assert from "node:assert";
 import { When, Then, Given } from "@cucumber/cucumber";
 
 import { App } from '../../../../src/server/app';
-import { ContractFirstAPIClient } from '../../../../src/package';
+import { DiskioAPIClient } from '../../../../src/package';
 
 process.env.PORT = "0";
 
 const app = new App();
-const client = new ContractFirstAPIClient(`http://localhost:${app.server.port}`);
-let request: ReturnType<ContractFirstAPIClient["healthCheck"]>;
+const client = new DiskioAPIClient(`http://localhost:${app.server.port}`);
+let request: ReturnType<DiskioAPIClient["healthCheck"]>;
 let response: Awaited<typeof request>;
 
 Given("I perform a fetch to {string}", (path) => {

@@ -1,8 +1,8 @@
 {
     "openapi": "3.1.0",
     "info": {
-        "title": "Crosscutting API",
-        "summary": "A boilerplate for building contract-first APIs in TypeScript with OpenAPI. Includes OpenAPI definition, compliant server setup, and npm package generation for seamless API development.",
+        "title": "Diskio API",
+        "summary": "An API Client for diskio-server",
         "version": "0.0.0"
     },
     "servers": [

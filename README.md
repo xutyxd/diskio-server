@@ -2,7 +2,7 @@
   <a href="https://github.com/xutyxd/diskio-server">
     <picture>
       <source srcset="./diskio-logo.png" width="150">
-      <img alt="TS Contract First logo" src="./diskio-logo.png" width="150">
+      <img alt="diskio logo" src="./diskio-logo.png" width="150">
     </picture>
   </a>
 </p>
