@@ -5,6 +5,10 @@ name: Docker build and release
 #     workflows: ["Server build"]
 #     types:
 #       - completed
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
