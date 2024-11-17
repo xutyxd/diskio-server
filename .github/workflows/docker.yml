@@ -1,10 +1,10 @@
 name: Docker build and release
 
-on:
-  workflow_run:
-    workflows: ["Server build"]
-    types:
-      - completed
+# on:
+#   workflow_run:
+#     workflows: ["Server build"]
+#     types:
+#       - completed
 
 jobs:
   build:
@@ -28,6 +28,7 @@ jobs:
           git fetch --tags
           version=$(echo $(git tag --sort=-creatordate | head -n 1))
           version=${version#v}
-
-          docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/diskio:$version . --platform linux/arm64/v8,linux/amd64 --push
-          docker buildx imagetools create -t docker.io/${{ secrets.DOCKER_USERNAME }}/diskio:latest docker.io/${{ secrets.DOCKER_USERNAME }}/diskio:$version
+          echo Goint to tag $version
+          docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/photron:$version . --platform linux/arm64/v8,linux/amd64 --push
+          echo Goint to create latest tag
+          docker buildx imagetools create -t docker.io/${{ secrets.DOCKER_USERNAME }}/photron:latest docker.io/${{ secrets.DOCKER_USERNAME }}/photron:$version
