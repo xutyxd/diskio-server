@@ -1,14 +1,10 @@
 name: Docker build and release
 
-# on:
-#   workflow_run:
-#     workflows: ["Server build"]
-#     types:
-#       - completed
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Server build"]
+    types:
+      - completed
 
 jobs:
   build:
