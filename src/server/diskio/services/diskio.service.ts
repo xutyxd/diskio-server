@@ -1,7 +1,8 @@
+import { DiskIO, DiskIOFile, DiskIOFileReadable } from "diskio-core";
 import { inject, injectable } from "inversify";
-import { DiskIO, DiskIOFile } from "diskio-core";
-import { ConfigurationService } from "../../configuration/services/configuration.service";
 import { HTTPRequest, IHTTPContextData } from "server-over-express";
+import { ConfigurationService } from "../../configuration/services/configuration.service";
+import { NotFoundError } from "../../crosscutting/common/errors";
 
 @injectable()
 export class DiskioService {
@@ -60,5 +61,22 @@ export class DiskioService {
         await finish;
         // Map the files to their names
         return diskioFiles.map((file) => file.name);
+    }
+
+    public async download(name: string) {
+        // Check if file exists
+        try {
+            const file = this.diskio.getSync(name, true);
+            // If file exists, close it
+            file.ready.then(() => file.close());
+        } catch (e) {
+            throw new NotFoundError('File not found');
+        }
+        // Create a stream
+        const fileStream = new DiskIOFileReadable(this.diskio, name.split('/'));
+        // Wait for the file to be ready
+        await fileStream.ready;
+        // Return the stream
+        return fileStream;
     }
 }

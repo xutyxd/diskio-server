@@ -1,7 +1,7 @@
 {
-    "name": "ts-openapi-contract-first-boilerplate",
+    "name": "diskio-api",
     "version": "1.0.0",
-    "description": "A boilerplate for building contract-first APIs in TypeScript with OpenAPI. Includes OpenAPI definition, compliant server setup, and npm package generation for seamless API development.",
+    "description": "An API Client for diskio-server",
     "type": "module",
     "main": "cjs/index.js",
     "module": "mjs/index.js",
@@ -19,32 +19,22 @@
     "scripts": {},
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/xutyxd/ts-openapi-contract-first-boilerplate.git"
+        "url": "git+https://github.com/xutyxd/diskio-server.git"
     },
     "author": "XutyXD",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/xutyxd/ts-openapi-contract-first-boilerplate/issues"
+        "url": "https://github.com/xutyxd/diskio-server/issues"
     },
-    "homepage": "https://github.com/xutyxd/ts-openapi-contract-first-boilerplate#readme",
+    "homepage": "https://github.com/xutyxd/diskio-server#readme",
     "keywords": [
-        "typescript",
-        "ts",
-        "openapi-generator",
-        "openapi-generator-cli",
-        "openapi-generator-typescript-node",
-        "openapi",
-        "openapi3",
-        "contract-first",
-        "contract-first-api",
-        "boilerplate",
-        "boilerplate-api",
-        "boilerplate-openapi",
-        "boilerplate-openapi-api",
-        "typescript-openapi-boilerplate",
-        "typescript-openapi-boilerplate-api",
-        "typescript-openapi-contract-first-boilerplate",
-        "typescript-openapi-contract-first-boilerplate-api"
+        "diskio",
+        "diskio-core",
+        "diskio-server",
+        "file-system",
+        "io",
+        "fs",
+        "api"
     ],
     "dependencies": {
         "openapi-fetch": "^0.12.0"

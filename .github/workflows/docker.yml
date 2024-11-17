@@ -29,5 +29,5 @@ jobs:
           version=$(echo $(git tag --sort=-creatordate | head -n 1))
           version=${version#v}
 
-          docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/photron:$version . --platform linux/arm64/v8,linux/amd64 --push
-          docker buildx imagetools create -t docker.io/${{ secrets.DOCKER_USERNAME }}/photron:latest docker.io/${{ secrets.DOCKER_USERNAME }}/photron:$version
+          docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/diskio:$version . --platform linux/arm64/v8,linux/amd64 --push
+          docker buildx imagetools create -t docker.io/${{ secrets.DOCKER_USERNAME }}/diskio:latest docker.io/${{ secrets.DOCKER_USERNAME }}/diskio:$version
