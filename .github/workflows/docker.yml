@@ -32,8 +32,6 @@ jobs:
           git fetch --tags
           version=$(echo $(git tag --sort=-creatordate | head -n 1))
           version=${version#v}
-          echo Goint to tag $version
-          echo Command: docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/diskio:1.0.0 . --platform linux/arm64/v8,linux/amd64 --push
-          docker buildx build -t xutyxd/diskio:1.0.0 . --platform linux/arm64/v8,linux/amd64 --push
-          echo Goint to create latest tag
+
+          docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/diskio:$version . --platform linux/arm64/v8,linux/amd64 --push
           docker buildx imagetools create -t docker.io/${{ secrets.DOCKER_USERNAME }}/diskio:latest docker.io/${{ secrets.DOCKER_USERNAME }}/diskio:$version
