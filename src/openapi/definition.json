@@ -15,11 +15,21 @@
         {
             "name": "Crosscutting",
             "description": "Operation related to a crosscutting actions"
+        },
+        {
+            "name": "DiskIO",
+            "description": "Operation related to the diskio-core API"
         }
     ],
     "paths": {
         "/health-check": {
             "$ref": "./crosscutting/health-check/paths/health-check.path.json"
+        },
+        "/diskio": {
+            "$ref": "./diskio/paths/diskio-post.path.json"
+        },
+        "/diskio/{name}": {
+            "$ref": "./diskio/paths/diskio.path.json"
         }
     },
     "components": {

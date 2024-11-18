@@ -79,4 +79,20 @@ export class DiskioService {
         // Return the stream
         return fileStream;
     }
+
+    public async delete(name: string) {
+        let file: DiskIOFile;
+        // Check if file exists
+        try {
+            file = this.diskio.getSync(name, true);
+            // Wait for the file to be ready
+            await file.ready;
+            // Delete the file
+            await file.delete();
+        } catch (e) {
+            throw new NotFoundError('File not found');
+        }
+
+        return file;
+    }
 }

@@ -34,4 +34,16 @@ export class DiskioAPIClient {
     public healthCheck() {
         return this.client.GET('/health-check');
     }
+
+    public diskio = {
+        upload: (files: File[]) => {
+            return this.client.POST('/diskio', { body: { files: files as any } });
+        },
+        download: (name: string) => {
+            return this.client.GET('/diskio/{name}', { params: { path: { name } }, responseType: 'arraybuffer' });
+        },
+        delete: (name: string) => {
+            return this.client.DELETE('/diskio/{name}', { params: { path: { name } } });
+        }
+    }
 }

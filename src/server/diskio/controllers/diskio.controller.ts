@@ -16,6 +16,10 @@ export class DiskioController implements IHTTPController {
         {
             path: { method: HttpMethodEnum.GET, relative: '*' },
             action: this.download.bind(this)
+        },
+        {
+            path: { method: HttpMethodEnum.DELETE, relative: '*' },
+            action: this.delete.bind(this)
         }
     ];
 
@@ -34,6 +38,23 @@ export class DiskioController implements IHTTPController {
             const file = await this.diskioService.download(path[0]);
     
             context.stream = file;
+        } catch (error) {
+
+            if (error instanceof NotFoundError) {
+                throw new NotFoundResponse(error.message, context);
+            }
+
+            throw new InternalErrorResponse('Unknown error', context);
+        }
+    }
+
+    public async delete(request: HTTPRequest, context: IHTTPContextData) {
+        try {
+            const { params: path } = request;
+
+            await this.diskioService.delete(path[0]);
+
+            return;
         } catch (error) {
 
             if (error instanceof NotFoundError) {
