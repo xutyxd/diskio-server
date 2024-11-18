@@ -15,7 +15,7 @@
     "package:build:mjs": "rm -fr package/mjs/* && tsc -p ./configurations/package/tsconfig-mjs.json && sh ./scripts/package/mjs-formatter.sh",
     "package:build": "npm run package:build:cjs && npm run package:build:mjs && ./scripts/package/fixup.sh",
     "start:local": "mkdir -p diskio && npm run server:build && node --env-file=.env ./server/cjs/index.js",
-    "start": "./server/cjs/index.js",
+    "start": "node ./server/cjs/index.js",
     "clean": "npm prune --production",
     "test:ts:server": "tsc --noEmit -p ./configurations/server/tsconfig-cjs.json",
     "test:ts:package": "tsc --noEmit -p ./configurations/package/tsconfig-cjs.json",
