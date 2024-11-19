@@ -35,8 +35,12 @@ export class DiskioAPIClient {
         return this.client.GET('/health-check');
     }
 
-    public upload(files: File[]) {
-        return this.client.POST('/diskio', { body: { files: files as any } });
+    public async upload(files: (File | Blob)[]) {
+        const formData = new FormData();
+        files.forEach((file) => formData.append('files', file));
+
+        const response = await this.client.POST('/diskio', { body: formData as any });
+        return response.data;
     }
     public async download(name: string, type: 'arrayBuffer' | 'stream' = 'arrayBuffer') {
         const response = await this.client.GET('/diskio/{name}', { params: { path: { name } }, parseAs: type });

@@ -57,7 +57,7 @@
     "ajv": "^8.17.1",
     "diskio-core": "^1.4.5",
     "inversify": "^6.0.2",
-    "openapi-fetch": "^0.12.0",
+    "openapi-fetch": "^0.13.0",
     "reflect-metadata": "^0.2.2",
     "server-over-express": "^1.6.1"
   }

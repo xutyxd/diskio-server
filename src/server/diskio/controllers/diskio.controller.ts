@@ -26,7 +26,13 @@ export class DiskioController implements IHTTPController {
     constructor(@inject(DiskioService) readonly diskioService: DiskioService) { }
 
     public async upload(request: HTTPRequest, context: IHTTPContextData) {
-        const files = await this.diskioService.upload(request, context);
+        let files: string[] = [];
+
+        try {
+            files = await this.diskioService.upload(request, context);
+        } catch (error) {
+            throw new InternalErrorResponse('Unknown error', context);
+        }
 
         return files;
     }
