@@ -35,15 +35,14 @@ export class DiskioAPIClient {
         return this.client.GET('/health-check');
     }
 
-    public diskio = {
-        upload: (files: File[]) => {
-            return this.client.POST('/diskio', { body: { files: files as any } });
-        },
-        download: (name: string) => {
-            return this.client.GET('/diskio/{name}', { params: { path: { name } }, responseType: 'arraybuffer' });
-        },
-        delete: (name: string) => {
-            return this.client.DELETE('/diskio/{name}', { params: { path: { name } } });
-        }
+    public upload(files: File[]) {
+        return this.client.POST('/diskio', { body: { files: files as any } });
+    }
+    public async download(name: string, type: 'arrayBuffer' | 'stream' = 'arrayBuffer') {
+        const response = await this.client.GET('/diskio/{name}', { params: { path: { name } }, parseAs: type });
+        return response.data;
+    }
+    public delete(name: string) {
+        return this.client.DELETE('/diskio/{name}', { params: { path: { name } } });
     }
 }

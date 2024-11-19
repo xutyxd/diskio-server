@@ -43,6 +43,37 @@ import { DiskioAPIClient } from 'diskio-api';
 import { DiskioAPIClient } from 'diskio-api';
 ```
 
+## Instance
+```js
+const client = new DiskioAPIClient('http://localhost:8080');
+```
+
+## Health Check
+Get information about the server
+```js
+const response = await client.healthCheck();
+console.log(response.data.response.diskio.size); // 10737418240
+```
+
+## Upload
+```ts
+const file: File = new File(['Hello world!'], 'hello.txt');
+const response = await client.upload([ file ]);
+const path = response.data.response[0];
+```
+
+## Download
+```js
+const file = await client.download(path, type: 'arrayBuffer' | 'stream') // default download is 'arrayBuffer'
+// Work with the file
+console.log(typeof file) // 'arraybuffer' | 'stream'
+```
+
+## Delete
+```js
+await client.delete('/path/to/file');
+```
+
 ## 📝 License
 
 This project is licensed under the `GNU AFFERO GENERAL PUBLIC LICENSE` - see the [LICENSE](LICENSE) file for details
