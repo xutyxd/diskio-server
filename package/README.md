@@ -58,8 +58,8 @@ console.log(response.data.response.diskio.size); // 10737418240
 ## Upload
 ```ts
 const file: File = new File(['Hello world!'], 'hello.txt');
-const response = await client.upload([ file ]);
-const path = response.data.response[0];
+const { response } = await client.upload([ file ]);
+const path = response[0];
 ```
 
 ## Download

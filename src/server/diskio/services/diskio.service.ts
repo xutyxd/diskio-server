@@ -10,8 +10,8 @@ export class DiskioService {
     private diskio: DiskIO;
 
     constructor(@inject(ConfigurationService) configurationService: ConfigurationService) {
-        const { path, size } = configurationService.diskio;
-        this.diskio = new DiskIO(path, size);
+        const { path, size, depth } = configurationService.diskio;
+        this.diskio = new DiskIO(path, size, depth as 1 | 2 | 3 | 4 | 5);
     }
 
     public async information() {

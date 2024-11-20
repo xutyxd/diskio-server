@@ -32,6 +32,8 @@ Environment variables:
     - Default: `./diskio`
 - `DISKIO_SIZE`: DiskIO size
     - Default: `1024 * 1024 * 1024 * 10` (10GB)
+- `DISKIO_DEPTH`: DiskIO depth (depth of directories, allowed `1` to `5`)
+    - Default: `3`
 - `PORT`: Port to run the server
     - Default: `8080`
 
