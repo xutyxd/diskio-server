@@ -55,8 +55,9 @@
   },
   "dependencies": {
     "ajv": "^8.17.1",
-    "diskio-core": "^1.4.5",
+    "diskio-core": "^1.9.0",
     "inversify": "^6.0.2",
+    "mongodb": "^7.0.0",
     "openapi-fetch": "^0.13.0",
     "reflect-metadata": "^0.2.2",
     "server-over-express": "^1.6.1"

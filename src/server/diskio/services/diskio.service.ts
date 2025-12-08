@@ -1,4 +1,6 @@
-import { DiskIO, DiskIOFile, DiskIOFileReadable } from "diskio-core";
+import { pipeline } from 'node:stream/promises';
+
+import { DiskIOFile, DiskIOFileReadable, DiskIOBatch } from "diskio-core";
 import { inject, injectable } from "inversify";
 import { HTTPRequest, IHTTPContextData } from "server-over-express";
 import { ConfigurationService } from "../../configuration/services/configuration.service";
@@ -7,11 +9,11 @@ import { NotFoundError } from "../../crosscutting/common/errors";
 @injectable()
 export class DiskioService {
 
-    private diskio: DiskIO;
+    private diskio: DiskIOBatch;
 
     constructor(@inject(ConfigurationService) configurationService: ConfigurationService) {
         const { path, size, depth } = configurationService.diskio;
-        this.diskio = new DiskIO(path, size, depth as 1 | 2 | 3 | 4 | 5);
+        this.diskio = new DiskIOBatch(path, size, depth as 1 | 2 | 3 | 4 | 5);
     }
 
     public async information() {
