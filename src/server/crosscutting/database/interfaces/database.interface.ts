@@ -9,6 +9,11 @@ export interface IDatabase<MD extends IEntityModelData> {
         open(configuration?: unknown): Promise<void> | void;
         close(): Promise<void>;
     };
+    // Table
+    table: {
+        create(table: string): Promise<void>;
+        drop(table: string): Promise<void>;
+    };
     // CRUD
     insert(from: string, data: MD): Promise<MD>;
     get(from: string, index: IIndexDbQueryWhere<MD>): Promise<MD | undefined>;

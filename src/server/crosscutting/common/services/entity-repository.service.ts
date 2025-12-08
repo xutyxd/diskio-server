@@ -8,7 +8,14 @@ export class EntityRepositoryService<D extends IEntityData, M extends IEntityMod
 
     constructor(private readonly database: IDatabase<M>,
                 private readonly table: string,
-                private readonly model: SM) { }
+                private readonly model: SM) {
+        try {
+            // Always attempt to create the table
+            this.database.table.create(this.table);
+        } catch (e) {
+            // Do nothing
+        }
+    }
 
     public async insert(data: M): Promise<M> {
         const inserted = await this.database.insert(this.table, data);
