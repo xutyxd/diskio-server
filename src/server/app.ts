@@ -14,7 +14,7 @@ import { MemoryDatabaseService } from './crosscutting/database/services/memory-d
 import { IDatabaseStatic } from './crosscutting/database/interfaces';
 
 import { HealthCheckContainer, HealthCheckController } from "./crosscutting/health-check";
-import { DiskioContainer, DiskioController } from './diskio';
+import { DiskIOContainer, DiskIOController } from './diskio';
 
 
 class App {
@@ -29,7 +29,7 @@ class App {
             ConfigurationContainer,
             HealthCheckContainer,
             CommonContainer,
-            DiskioContainer
+            DiskIOContainer
         ];
         // Merge containers
         const appContainer = Container.merge(container, ...containers);
@@ -84,10 +84,10 @@ class App {
         // httpServer.keys = (configurationService.keys.cookies()) as string[];
         // Controllers
         const healthCheckController = appContainer.get(HealthCheckController);
-        const diskioController = appContainer.get(DiskioController);
+        const diskIOController = appContainer.get(DiskIOController);
         // Set controllers
         httpServer.controllers.add(healthCheckController);
-        httpServer.controllers.add(diskioController);
+        httpServer.controllers.add(diskIOController);
     }
 }
 

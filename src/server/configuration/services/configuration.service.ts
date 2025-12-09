@@ -9,7 +9,7 @@ export class ConfigurationService {
     private Diskio = {
         path: process.env.DISKIO_PATH || './diskio',
         size: process.env.DISKIO_SIZE ? parseInt(process.env.DISKIO_SIZE) : 1024 * 1024 * 1024 * 10,
-        depth: process.env.DISKIO_DEPTH ? parseInt(process.env.DISKIO_DEPTH) : 3
+        depth: process.env.DISKIO_DEPTH ? parseInt(process.env.DISKIO_DEPTH) : 2
     }
 
     public keys = {

@@ -1,3 +1,3 @@
-export { IDiskioAPI } from "./diskio-api.interface";
-export { IDiskio } from "./diskio.interface";
-export { IDiskioModel } from "./diskio-model.interface";
+export { IDiskIOAPI } from "./diskio-api.interface";
+export { IDiskIO } from "./diskio.interface";
+export { IDiskIOModel } from "./diskio-model.interface";

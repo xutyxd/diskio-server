@@ -4,12 +4,12 @@ import { HealthCheck } from "../classes";
 import { name, version } from '../../../../../package.json';
 import { IHealthCheckAPIData, IHealthCheckData, IHealthCheckModelData } from "../interfaces/data";
 import { HealthCheckRepository } from "../repository/health-check.repository";
-import { DiskioService } from "../../../diskio/services/diskio.service";
+import { DiskIOService } from "../../../diskio/services/diskio.service";
 
 @injectable()
 export class HealthCheckService extends EntityService<IHealthCheckAPIData, IHealthCheckData, IHealthCheckModelData> {
     constructor(@inject(HealthCheckRepository) readonly healthCheckRepository: HealthCheckRepository,
-                @inject(DiskioService) readonly diskioService: DiskioService) {
+                @inject(DiskIOService) readonly diskIOService: DiskIOService) {
         super(healthCheckRepository, HealthCheck);
         this.updateMemory();
     }
@@ -29,7 +29,7 @@ export class HealthCheckService extends EntityService<IHealthCheckAPIData, IHeal
 
         const interval = setInterval(async () => {
             // Get disk information
-            const { disk, diskio } = await this.diskioService.information();
+            const { disk, diskio } = await this.diskIOService.information();
             // Create health check in memory
             const healthCheck = new HealthCheck({
                 server: {

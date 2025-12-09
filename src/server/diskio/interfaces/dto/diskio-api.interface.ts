@@ -1,4 +1,4 @@
 import { IEntityAPI } from "../../../crosscutting/common/interfaces/dto";
-import { IDiskioAPIData, IDiskioData } from "../data";
+import { IDiskIOAPIData, IDiskIOData } from "../data";
 
-export interface IDiskioAPI extends IEntityAPI<IDiskioAPIData, IDiskioData>{ }
+export interface IDiskIOAPI extends IEntityAPI<IDiskIOAPIData, IDiskIOData>{ }

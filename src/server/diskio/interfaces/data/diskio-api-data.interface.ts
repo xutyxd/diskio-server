@@ -1,5 +1,5 @@
 import { IEntityAPIData } from "../../../crosscutting/common/interfaces/data";
 
-export interface IDiskioAPIData extends IEntityAPIData {
+export interface IDiskIOAPIData extends IEntityAPIData {
     propertyA: string;
 }

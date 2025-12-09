@@ -1,14 +1,14 @@
 import { inject, injectable } from "inversify";
 import { EntityRepositoryService } from "../../crosscutting/common/services";
 import { IDatabase } from "../../crosscutting/database/interfaces";
-import { DiskioModel } from "../classes";
-import { IDiskioData, IDiskioModelData } from "../interfaces/data";
+import { DiskIOModel } from "../classes";
+import { IDiskIOData, IDiskIOModelData } from "../interfaces/data";
 
 @injectable()
-export class DiskioRepository extends EntityRepositoryService<IDiskioData, IDiskioModelData> {
+export class DiskIORepository extends EntityRepositoryService<IDiskIOData, IDiskIOModelData> {
 
-    constructor(@inject('IDatabase') readonly dataBaseService: IDatabase<IDiskioModelData>) {
-        const table = 'diskio';
-        super(dataBaseService, table, DiskioModel);
+    constructor(@inject('IDatabase') readonly dataBaseService: IDatabase<IDiskIOModelData>) {
+        const table = 'diskIO';
+        super(dataBaseService, table, DiskIOModel);
     }
 }

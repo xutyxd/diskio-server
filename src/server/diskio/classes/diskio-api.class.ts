@@ -1,12 +1,12 @@
 import { EntityAPI } from "../../crosscutting/common/classes";
-import { IDiskioAPIData, IDiskioData } from "../interfaces/data";
-import { IDiskioAPI } from "../interfaces/dto";
+import { IDiskIOAPIData, IDiskIOData } from "../interfaces/data";
+import { IDiskIOAPI } from "../interfaces/dto";
 
-export class DiskioAPI extends EntityAPI implements IDiskioAPI {
+export class DiskIOAPI extends EntityAPI implements IDiskIOAPI {
     
     public propertyA;
 
-    constructor(data: IDiskioAPIData) {
+    constructor(data: IDiskIOAPIData) {
         super(data);
 
         this.propertyA = data.propertyA;
@@ -30,7 +30,7 @@ export class DiskioAPI extends EntityAPI implements IDiskioAPI {
         };
     }
 
-    public static fromDomain(entity: IDiskioData) {
-        return new DiskioAPI({ ...entity });
+    public static fromDomain(entity: IDiskIOData) {
+        return new DiskIOAPI({ ...entity });
     }
 }

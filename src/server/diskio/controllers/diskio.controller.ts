@@ -1,11 +1,11 @@
 import { inject, injectable } from 'inversify';
 import { HttpMethodEnum, HTTPRequest, IHTTPContextData, IHTTPController } from 'server-over-express';
-import { DiskioService } from '../services/diskio.service';
+import { DiskIOService } from '../services/diskio.service';
 import { NotFoundError } from '../../crosscutting/common/errors';
 import { InternalErrorResponse, NotFoundResponse } from '../../crosscutting/common/responses';
 
 @injectable()
-export class DiskioController implements IHTTPController {
+export class DiskIOController implements IHTTPController {
 
     public path = 'diskio';
     public handlers = [
@@ -23,13 +23,16 @@ export class DiskioController implements IHTTPController {
         }
     ];
 
-    constructor(@inject(DiskioService) readonly diskioService: DiskioService) { }
+    constructor(@inject(DiskIOService) readonly diskIOService: DiskIOService) { }
 
     public async upload(request: HTTPRequest, context: IHTTPContextData) {
+        // Increase request timeout
+        request.setTimeout(5 * 60 * 1000);
+        request.socket.setTimeout(10 * 60 * 1000);
         let files: string[] = [];
 
         try {
-            files = await this.diskioService.upload(request, context);
+            files = await this.diskIOService.upload(request, context);
         } catch (error) {
             throw new InternalErrorResponse('Unknown error', context);
         }
@@ -41,7 +44,7 @@ export class DiskioController implements IHTTPController {
         try {
             const { params: path } = request;
 
-            const file = await this.diskioService.download(path[0]);
+            const file = await this.diskIOService.download(path[0]);
     
             context.stream = file;
         } catch (error) {
@@ -58,7 +61,7 @@ export class DiskioController implements IHTTPController {
         try {
             const { params: path } = request;
 
-            await this.diskioService.delete(path[0]);
+            await this.diskIOService.delete(path[0]);
 
             return;
         } catch (error) {

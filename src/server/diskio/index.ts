@@ -1,13 +1,13 @@
 import { Container } from "inversify";
 
-import { DiskioController } from "./controllers/diskio.controller";
-import { DiskioRepository } from "./repository/diskio.repository";
-import { DiskioService } from "./services/diskio.service";
+import { DiskIOController } from "./controllers/diskio.controller";
+import { DiskIORepository } from "./repository/diskio.repository";
+import { DiskIOService } from "./services/diskio.service";
 
-const DiskioContainer = new Container();
+const DiskIOContainer = new Container();
 
-DiskioContainer.bind<DiskioController>(DiskioController).toSelf();
-DiskioContainer.bind<DiskioService>(DiskioService).toSelf();
-DiskioContainer.bind<DiskioRepository>(DiskioRepository).toSelf();
+DiskIOContainer.bind<DiskIOController>(DiskIOController).toSelf();
+DiskIOContainer.bind<DiskIOService>(DiskIOService).toSelf();
+DiskIOContainer.bind<DiskIORepository>(DiskIORepository).toSelf();
 
-export { DiskioContainer, DiskioController };
+export { DiskIOContainer, DiskIOController };

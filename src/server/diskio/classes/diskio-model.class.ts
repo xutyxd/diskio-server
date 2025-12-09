@@ -1,12 +1,12 @@
 import { EntityModel } from "../../crosscutting/common/classes";
-import { IDiskioData, IDiskioModelData } from "../interfaces/data";
-import { IDiskioModel } from "../interfaces/dto";
+import { IDiskIOData, IDiskIOModelData } from "../interfaces/data";
+import { IDiskIOModel } from "../interfaces/dto";
 
-export class DiskioModel extends EntityModel implements IDiskioModel {
+export class DiskIOModel extends EntityModel implements IDiskIOModel {
 
     public property_a;
 
-    constructor(data: IDiskioModelData) {
+    constructor(data: IDiskIOModelData) {
         super(data);
 
         this.property_a = data.property_a;
@@ -30,19 +30,19 @@ export class DiskioModel extends EntityModel implements IDiskioModel {
         };
     }
 
-    public static fromDomain(entity: IDiskioData) {
+    public static fromDomain(entity: IDiskIOData) {
         const base = super.fromDomain(entity);
 
-        return new DiskioModel({
+        return new DiskIOModel({
             ...base,
             property_a: entity.propertyA
         });
     }
 
-    public static fromRepository(entity: IDiskioModelData) {
+    public static fromRepository(entity: IDiskIOModelData) {
         const base = super.fromRepository(entity);
 
-        return new DiskioModel({
+        return new DiskIOModel({
             ...base,
             property_a: entity.property_a
         });
