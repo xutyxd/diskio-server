@@ -7,7 +7,7 @@ if [ -z "$1" ]; then
 fi
 
 # Check if the entity name is valid
-if [[ ! $1 =~ ^[a-zA-Z0-9]+$ ]]; then
+if [[ ! $1 =~ ^[a-zA-Z0-9\-]+$ ]]; then
     echo "Invalid entity name"
     exit 1
 fi

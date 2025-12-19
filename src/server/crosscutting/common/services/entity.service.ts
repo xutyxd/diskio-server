@@ -41,7 +41,8 @@ export class EntityService<A extends IEntityAPIData, D extends IEntityData, M ex
             if (error instanceof BaseError) {
                 throw error;
             }
-
+            console.log('Data to be created: ', data);
+            console.log(error);
             throw new InternalError('Error creating entity');
         }
 

@@ -1,12 +1,12 @@
 import { injectable } from "inversify";
-import { Db, MongoClient, Filter } from "mongodb";
+import { Db, MongoClient, Filter, Document } from "mongodb";
 import { IEntityModelData } from "../../common/interfaces/data";
 import { IDatabase, IDbQueryWhere, IIndexDbQueryWhere } from "../interfaces";
 import { InternalError, NotFoundError } from "../../common/errors";
 import { DbWhereOperands } from "../enums/db-where-operands.enum";
 
 @injectable()
-export class MongoDatabaseService <MD extends IEntityModelData> implements IDatabase<MD> {
+export class MongoDatabaseService<MD extends IEntityModelData> implements IDatabase<MD> {
 
     private connected: boolean = false;
     private mongoClient?: MongoClient;
@@ -20,14 +20,10 @@ export class MongoDatabaseService <MD extends IEntityModelData> implements IData
             const { uri, database } = configuration;
             const client = new MongoClient(uri);
 
-            try {
-                await client.connect();
-                this.db = client.db(database);
-                this.connected = true;
-                this.mongoClient = client;
-            } catch (error) {
-                console.log('Error connecting to database: ', error);
-            }
+            await client.connect();
+            this.db = client.db(database);
+            this.connected = true;
+            this.mongoClient = client;
         },
         close: async () => {
             await this.mongoClient?.close();
@@ -44,6 +40,13 @@ export class MongoDatabaseService <MD extends IEntityModelData> implements IData
             }
 
             await this.db.createCollection(from);
+        },
+        get: <T extends Document>(from: string) => {
+            if (!this.connected || !this.db) {
+                throw new InternalError('Database not connected');
+            }
+
+            return this.db.collection<T>(from);
         },
         drop: async (from: string) => {
             if (!this.connected || !this.db) {
@@ -62,9 +65,9 @@ export class MongoDatabaseService <MD extends IEntityModelData> implements IData
 
         const collection = this.db.collection(from);
         const inserted = await collection.insertOne(data);
-        
+
         const getted = await this.get(from, { A: 'uuid', B: inserted.insertedId.toString(), op: DbWhereOperands.EQUALS });
-        
+
         return getted;
     }
 
@@ -72,7 +75,7 @@ export class MongoDatabaseService <MD extends IEntityModelData> implements IData
         if (!this.connected || !this.db) {
             throw new InternalError('Database not connected');
         }
-        
+
         const { A: property, B: value } = toIndex;
         const collection = this.db.collection<MD>(from);
         const filter = { [property as keyof MD]: value as MD[keyof MD] } as Filter<MD>;
@@ -128,7 +131,7 @@ export class MongoDatabaseService <MD extends IEntityModelData> implements IData
         const collection = this.db.collection<MD>(from);
         const filter = { [property as keyof MD]: value as MD[keyof MD] } as Filter<MD>;
         const updated = await collection.findOneAndUpdate(filter, { $set: data });
-        
+
         if (!updated) {
             throw new NotFoundError('Record not found');
         }

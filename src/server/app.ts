@@ -14,6 +14,8 @@ import { MemoryDatabaseService } from './crosscutting/database/services/memory-d
 import { IDatabaseStatic } from './crosscutting/database/interfaces';
 
 import { HealthCheckContainer, HealthCheckController } from "./crosscutting/health-check";
+import { DiskioChunkContainer } from './diskio-chunk';
+import { DiskioFileContainer } from './diskio-file';
 import { DiskIOContainer, DiskIOController } from './diskio';
 
 
@@ -29,6 +31,8 @@ class App {
             ConfigurationContainer,
             HealthCheckContainer,
             CommonContainer,
+            DiskioChunkContainer,
+            DiskioFileContainer,
             DiskIOContainer
         ];
         // Merge containers
@@ -58,23 +62,26 @@ class App {
         //     // Set actions before request
         //     this.server.request.before.add(setAuthAction);
         // },
-        database: (database: IDatabaseStatic = MemoryDatabaseService, configuration?: unknown) => {
+        database: async (database: IDatabaseStatic = MemoryDatabaseService, configuration?: unknown) => {
             const appContainer = this.appContainer;
             // Set database
             appContainer.bind<IDatabase<unknown & IEntityModelData>>('IDatabase').to(database).inSingletonScope();
             // Get database
             const databaseService = appContainer.get<IDatabase<unknown & IEntityModelData>>('IDatabase');
-            databaseService.connection.open(configuration);
+            await databaseService.connection.open(configuration);
         }
     }
 
     public start = () => {
+        console.log('Starting server...');
         const appContainer = this.appContainer;
         const httpServer = this.server;
+        // Increase timeout
+        httpServer['server'].setTimeout(10 * 60 * 1000);
         // Check database
         try {
             appContainer.get<IDatabase<unknown & IEntityModelData>>('IDatabase');
-        } catch {
+        } catch(error) {
             // Set memory database
             this.set.database();
         }

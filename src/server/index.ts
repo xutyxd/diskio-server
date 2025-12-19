@@ -19,8 +19,9 @@ if (MONGODB_URI && MONGODB_DATABASE) {
     }
 }
 
-app.set.database(database, configuration);
-
-app.start();
+(async () => {
+    await app.set.database(database, configuration);
+    app.start();
+})();
 
 export default app;

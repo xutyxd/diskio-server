@@ -7,7 +7,7 @@ import { IEntityModelStatic } from "../interfaces/static";
 export class EntityRepositoryService<D extends IEntityData, M extends IEntityModelData, SM extends IEntityModelStatic<D, M> = IEntityModelStatic<D, M>> implements IEntityRepository<M> {
 
     constructor(private readonly database: IDatabase<M>,
-                private readonly table: string,
+                protected readonly table: string,
                 private readonly model: SM) {
         try {
             // Always attempt to create the table

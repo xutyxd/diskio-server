@@ -3,6 +3,7 @@ import { HttpMethodEnum, HTTPRequest, IHTTPContextData, IHTTPController } from '
 import { DiskIOService } from '../services/diskio.service';
 import { NotFoundError } from '../../crosscutting/common/errors';
 import { InternalErrorResponse, NotFoundResponse } from '../../crosscutting/common/responses';
+import { IDiskioFileAPIData } from '../../diskio-file/interfaces/data';
 
 @injectable()
 export class DiskIOController implements IHTTPController {
@@ -26,10 +27,7 @@ export class DiskIOController implements IHTTPController {
     constructor(@inject(DiskIOService) readonly diskIOService: DiskIOService) { }
 
     public async upload(request: HTTPRequest, context: IHTTPContextData) {
-        // Increase request timeout
-        request.setTimeout(5 * 60 * 1000);
-        request.socket.setTimeout(10 * 60 * 1000);
-        let files: string[] = [];
+        let files: IDiskioFileAPIData[] = [];
 
         try {
             files = await this.diskIOService.upload(request, context);
