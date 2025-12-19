@@ -25,7 +25,7 @@ export class HealthCheckService extends EntityService<IHealthCheckAPIData, IHeal
             uptime: process.uptime()
         });
         // Save health check in database
-        const created = await super.create(healthCheck.toModel());
+        const created = await super.create(healthCheck.toDomain());
 
         const interval = setInterval(async () => {
             // Get disk information

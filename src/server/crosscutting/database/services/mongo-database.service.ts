@@ -66,7 +66,7 @@ export class MongoDatabaseService<MD extends IEntityModelData> implements IDatab
         const collection = this.db.collection(from);
         const inserted = await collection.insertOne(data);
 
-        const getted = await this.get(from, { A: 'uuid', B: inserted.insertedId.toString(), op: DbWhereOperands.EQUALS });
+        const getted = await this.get(from, { A: '_id' as keyof MD, B: inserted.insertedId as any as string, op: DbWhereOperands.EQUALS });
 
         return getted;
     }
