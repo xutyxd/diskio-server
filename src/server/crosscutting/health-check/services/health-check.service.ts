@@ -32,6 +32,8 @@ export class HealthCheckService extends EntityService<IHealthCheckAPIData, IHeal
             const { disk, diskio } = await this.diskIOService.information();
             // Create health check in memory
             const healthCheck = new HealthCheck({
+                uuid: created.uuid,
+                createdAt: created.createdAt,
                 server: {
                     name,
                     version: version as `${number}.${number}.${number}`,
