@@ -55,7 +55,7 @@ export class DiskIOService {
         finish.push(processed);
         const uploaded: IDiskioFileAPIData[] = [];
 
-        const onFile = async (name: string, file: Readable, information: FileInfo) => {
+        const onFile = async (file: Readable, information: FileInfo) => {
             const { filename } = information;
             const diskioFileSmart = new DiskIOFileSmart(this.diskio);
             await diskioFileSmart.ready;
@@ -78,7 +78,7 @@ export class DiskIOService {
             // Create relation with uuid, hash, and index for each chunk
             const updated = upserted.map((c) => ({ ...c, index: hashToIndex.get(c.hash) || 0 }));
             // Save file with upserted chunks and map
-            const diskioFile = new DiskioFile({ name, chunks: updated });
+            const diskioFile = new DiskioFile({ name: filename, chunks: updated });
             // Save file with upserted chunks
             const inserted = await this.diskioFileService.create(diskioFile.toDomain());
             // Return the file
@@ -87,7 +87,7 @@ export class DiskIOService {
             uploaded.push(toApi);
         };
         files.on('file', (name, stream, info) => {
-            const handling = onFile(name, stream, info);
+            const handling = onFile(stream, info);
             finish.push(handling);
         });
         await processed;
