@@ -35,6 +35,10 @@ export class DiskioAPIClient {
         return this.client.GET('/health-check');
     }
 
+    public async files() {
+        return this.client.GET('/diskio');
+    }
+
     public async upload(files: (File | Blob)[]) {
         const formData = new FormData();
         files.forEach((file) => formData.append('files', file));
@@ -42,11 +46,13 @@ export class DiskioAPIClient {
         const response = await this.client.POST('/diskio', { body: formData as any });
         return response.data;
     }
-    public async download(name: string, type: 'arrayBuffer' | 'stream' = 'arrayBuffer') {
-        const response = await this.client.GET('/diskio/{name}', { params: { path: { name } }, parseAs: type });
+
+    public async download(uuid: string, type: 'arrayBuffer' | 'stream' = 'arrayBuffer') {
+        const response = await this.client.GET('/diskio/{uuid}', { params: { path: { uuid } }, parseAs: type });
         return response.data;
     }
-    public delete(name: string) {
-        return this.client.DELETE('/diskio/{name}', { params: { path: { name } } });
+
+    public delete(uuid: string) {
+        return this.client.DELETE('/diskio/{uuid}', { params: { path: { uuid } } });
     }
 }

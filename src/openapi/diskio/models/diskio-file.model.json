@@ -1,0 +1,35 @@
+{
+    "type": "object",
+    "properties": {
+        "uuid": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "createdAt": {
+            "type": "integer",
+            "format": "int64"
+        },
+        "updatedAt": {
+            "type": "integer",
+            "format": "int64"
+        },
+        "name": {
+            "description": "File name",
+            "example": "meme.mp4",
+            "readOnly": true,
+            "type": "string"
+        },
+        "size": {
+            "description": "File size on disk",
+            "example": 123456,
+            "readOnly": true,
+            "type": "integer"
+        },
+        "original": {
+            "description": "File size uploaded",
+            "example": 123456,
+            "readOnly": true,
+            "type": "integer"
+        }
+    }
+}

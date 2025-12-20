@@ -26,10 +26,10 @@
             "$ref": "./crosscutting/health-check/paths/health-check.path.json"
         },
         "/diskio": {
-            "$ref": "./diskio/paths/diskio-post.path.json"
-        },
-        "/diskio/{name}": {
             "$ref": "./diskio/paths/diskio.path.json"
+        },
+        "/diskio/{uuid}": {
+            "$ref": "./diskio/paths/diskio-uuid.path.json"
         }
     },
     "components": {

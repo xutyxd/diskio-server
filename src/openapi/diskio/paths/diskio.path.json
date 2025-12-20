@@ -1,138 +1,84 @@
 {
     "get": {
         "tags": [ "DiskIO" ],
-        "summary": "Download a file",
-        "parameters": [
-            {
-                "name": "name",
-                "in": "path",
-                "required": true,
-                "schema": {
-                    "type": "string",
-                    "example": "7b1d2a45/1211/4517/b968/dbb6799aef6b/meme.mp4"
-                }
-            }
-        ],
+        "summary": "List files",
         "responses": {
             "200": {
-                "description": "File",
-                "content": {
-                    "application/octet-stream": {
-                        "schema": {
-                            "type": "string",
-                            "format": "binary"
-                        }
-                    }
-                }
-            },
-            "404": {
-                "description": "Folder not found",
+                "description": "File names",
                 "content": {
                     "application/json": {
                         "schema": {
+                            "example": {
+                                "$ref": "../examples/diskio-file.example.json"
+                            },
                             "allOf": [
                                 {
-                                    "$ref": "../../common/not-found-response.model.json"
+                                    "$ref": "../../common/response.model.json"
                                 },
                                 {
                                     "type": "object",
                                     "required": ["response"],
                                     "properties": {
                                         "response": {
-                                            "type": "string",
-                                            "example": "Not found: File not found"
+                                            "type": "array",
+                                            "minItems": 0,
+                                            "items": {
+                                                "$ref": "../models/diskio-file.model.json"
+                                            }
                                         }
-                                    }
+                                    }                                    
                                 }
                             ]
                         }
                     }
-                }
-            },
-            "500": {
-                "description": "Internal server error",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "../../common/internal-server-error-response.model.json"
-                                },
-                                {
-                                    "type": "object",
-                                    "required": ["response"],
-                                    "properties": {
-                                        "response": {
-                                            "type": "string",
-                                            "example": "Internal server error: Unknown error"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
+                }                
             }
         }
     },
-    "delete": {
+    "post": {
         "tags": [ "DiskIO" ],
-        "summary": "Delete a file",
-        "parameters": [
-            {
-                "name": "name",
-                "in": "path",
-                "required": true,
-                "schema": {
-                    "type": "string",
-                    "example": "7b1d2a45/1211/4517/b968/dbb6799aef6b/meme.mp4"
-                }
-            }
-        ],
-        "responses": {
-            "200": {
-                "description": "File deleted"
-            },
-            "404": {
-                "description": "Folder not found",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "../../common/not-found-response.model.json"
-                                },
-                                {
-                                    "type": "object",
-                                    "required": ["response"],
-                                    "properties": {
-                                        "response": {
-                                            "type": "string",
-                                            "example": "Not found: File not found"
-                                        }
-                                    }
+        "summary": "Upload a file",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "multipart/form-data": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "files": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "format": "binary"
                                 }
-                            ]
-                        }
+                            }
+                        },
+                        "required": [
+                            "files"
+                        ]
                     }
                 }
-            },
-            "500": {
-                "description": "Internal server error",
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "File names",
                 "content": {
                     "application/json": {
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "../../common/internal-server-error-response.model.json"
+                                    "$ref": "../../common/response.model.json"
                                 },
                                 {
                                     "type": "object",
                                     "required": ["response"],
                                     "properties": {
                                         "response": {
-                                            "type": "string",
-                                            "example": "Internal server error: Unknown error"
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
                                         }
                                     }
                                 }
