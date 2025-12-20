@@ -1,8 +1,9 @@
 FROM alpine AS builder
-RUN apk add 'nodejs<21'
-RUN node --version
-RUN apk add 'npm<11'
+# Download and install Node.js
+RUN apk add --no-cache nodejs npm
+
 WORKDIR /user/src/app
+
 ADD . .
 RUN npm install
 RUN npm run openapi:bundle
@@ -10,10 +11,11 @@ RUN npm run server:build
 RUN npm run clean
 
 FROM alpine AS runner
-RUN apk add 'nodejs<21'
-RUN node --version
-RUN apk add 'npm<11'
+# Download and install Node.js
+RUN apk add --no-cache nodejs npm
+
 WORKDIR /user/src/app
+
 COPY --from=builder /user/src/app/server/cjs /user/src/app/server/cjs
 COPY --from=builder /user/src/app/server/openapi /user/src/app/server/openapi
 COPY --from=builder /user/src/app/package.json /user/src/app/package.json
