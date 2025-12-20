@@ -24,19 +24,21 @@ export class DiskioChunkRepository extends EntityRepositoryService<IDiskioChunkD
         // Get instances
         const models = chunks.map((chunk) => new DiskioChunkModel(chunk));
         // Define the bulk operations
-        const operations: AnyBulkWriteOperation<IDiskioChunkModelData>[] = models.map((chunk) => ({
-            updateOne: {
-                filter: { hash: chunk.hash }, // Uniquely identify by hash
-                update: {
-                    $inc: { refs: 1 },     // Atomic Increment
-                    $setOnInsert: {             // Only set these if creating new doc
-                        ...chunk.toRepository(),
-                        refs: 1, // Always set refs to 1 on insert
+        const operations: AnyBulkWriteOperation<IDiskioChunkModelData>[] = models.map((chunk) => {
+            const { refs, ...rest } = chunk.toRepository();
+            return {
+                updateOne: {
+                    filter: { hash: chunk.hash }, // Uniquely identify by hash
+                    update: {
+                        $inc: { refs: 1 },     // Atomic Increment
+                        $setOnInsert: {             // Only set these if creating new doc
+                            ...rest,
+                        },
                     },
+                    upsert: true, // The magic flag: Create if not exists
                 },
-                upsert: true, // The magic flag: Create if not exists
-            },
-        }));
+            }
+        });
         // Get the collection
         const collection = this.dataBaseService.table.get<IDiskioChunkModelData>(this.table);
         // Execute the bulk operations
