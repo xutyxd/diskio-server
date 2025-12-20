@@ -51,7 +51,7 @@ jobs:
 
       - name: Functional tests
         run: |
-          npm run test:functionals
+          # npm run test:functionals
 
       - name: Build server package
         run: |

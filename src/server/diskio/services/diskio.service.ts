@@ -8,11 +8,6 @@ import { inject, injectable } from "inversify";
 import { HTTPRequest, IHTTPContextData } from "server-over-express";
 import { ConfigurationService } from "../../configuration/services/configuration.service";
 import { NotFoundError } from "../../crosscutting/common/errors";
-import { IDiskIOFileManifest } from 'diskio-core/cjs/interfaces/diskio-file-manifest.interface';
-import { EntityService } from '../../crosscutting/common';
-import { IDiskIOAPIData, IDiskIOData, IDiskIOModelData } from '../interfaces/data';
-import { DiskIORepository } from '../repository/diskio.repository';
-import { DiskIO } from '../classes';
 import { DiskioChunkService } from '../../diskio-chunk/services/diskio-chunk.service';
 import { DiskioFileService } from '../../diskio-file/services/diskio-file.service';
 import { DiskioChunk } from '../../diskio-chunk/classes';
@@ -23,8 +18,6 @@ import { IDiskioFileAPIData } from '../../diskio-file/interfaces/data';
 export class DiskIOService {
 
     private diskio: DiskIOBatch;
-
-    private hashMap: Map<string, IDiskIOFileManifest> = new Map();
 
     constructor(@inject(ConfigurationService) configurationService: ConfigurationService,
                 @inject(DiskioChunkService) readonly diskioChunkService: DiskioChunkService,
