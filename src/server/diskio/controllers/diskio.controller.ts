@@ -37,7 +37,9 @@ export class DiskIOController implements IHTTPController {
         let files: IDiskioFileAPIData[] = [];
 
         try {
-            files = await this.diskIOService.upload(request, context);
+            const uploaded = await this.diskIOService.upload(request, context);
+            // Transform to API data
+            files = uploaded.map((file) => new DiskioFileAPI(file).toApi());
         } catch (error) {
             throw new InternalErrorResponse('Unknown error', context);
         }
