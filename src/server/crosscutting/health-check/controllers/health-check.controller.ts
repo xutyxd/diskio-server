@@ -9,7 +9,7 @@ import { HealthCheckAPI } from '../classes';
 export class HealthCheckController extends EntityController<IHealthCheckAPIData, IHealthCheckData, IHealthCheckModelData> implements IHTTPController {
 
     public path = 'health-check';
-    public handlers: IHTTPControllerHandler<IHealthCheckAPIData>[];
+    public handlers: IHTTPControllerHandler<IHealthCheckAPIData | IHealthCheckAPIData[]>[];
 
     constructor(@inject(HealthCheckService) private readonly healthCheckService: HealthCheckService) {
         const schemas = {
@@ -25,6 +25,10 @@ export class HealthCheckController extends EntityController<IHealthCheckAPIData,
             {
                 path: { method: HttpMethodEnum.GET },
                 action: this.healthCheck.bind(this) // IMPORTANT: Bind this to the controller
+            },
+            {
+                path: { method: HttpMethodEnum.GET, relative: 'all' },
+                action: super.list.bind(this)
             }
         ]
     }
