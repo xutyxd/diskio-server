@@ -75,6 +75,7 @@ export class DiskIOController implements IHTTPController {
                 key: 'Content-Length',
                 value: file.size.toString()
             });
+            // Set stream for download
             context.stream = file;
         } catch (error) {
 
