@@ -49,7 +49,9 @@ export class DiskioAPIClient {
 
     public async download(uuid: string, type: 'arrayBuffer' | 'stream' = 'arrayBuffer') {
         const response = await this.client.GET('/diskio/{uuid}', { params: { path: { uuid } }, parseAs: type });
-        return response.data;
+        const size = response.response.headers.get('Content-Length');
+
+        return { size, stream: response.data };
     }
 
     public delete(uuid: string) {
