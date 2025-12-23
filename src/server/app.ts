@@ -43,7 +43,8 @@ class App {
         this.appContainer = appContainer;
 
         const port = process.env.PORT ? parseInt(process.env.PORT) : 8080;
-        const httpServer = new HTTPServer(port, Response);
+        const requestTimeout = process.env.TIMEOUT ? parseInt(process.env.TIMEOUT) : 10 * 60 * 1000;
+        const httpServer = new HTTPServer(port, Response, { requestTimeout });
         // Set API to be able to call it from anywhere
         httpServer.headers.add({
             key: "Access-Control-Allow-origin",
@@ -76,8 +77,6 @@ class App {
         console.log('Starting server...');
         const appContainer = this.appContainer;
         const httpServer = this.server;
-        // Increase timeout
-        httpServer['server'].setTimeout(10 * 60 * 1000);
         // Check database
         try {
             appContainer.get<IDatabase<unknown & IEntityModelData>>('IDatabase');
