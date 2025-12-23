@@ -70,7 +70,11 @@ export class DiskIOController implements IHTTPController {
             const { params: path } = request;
 
             const file = await this.diskIOService.download(path[0]);
-    
+            // Set content length
+            context.headers.push({
+                key: 'Content-Length',
+                value: file.size.toString()
+            });
             context.stream = file;
         } catch (error) {
 
