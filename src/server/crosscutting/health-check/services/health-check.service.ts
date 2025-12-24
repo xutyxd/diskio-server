@@ -8,6 +8,8 @@ import { DiskIOService } from "../../../diskio/services/diskio.service";
 
 @injectable()
 export class HealthCheckService extends EntityService<IHealthCheckAPIData, IHealthCheckData, IHealthCheckModelData> {
+    private stopped = false;
+
     constructor(@inject(HealthCheckRepository) readonly healthCheckRepository: HealthCheckRepository,
                 @inject(DiskIOService) readonly diskIOService: DiskIOService) {
         super(healthCheckRepository, HealthCheck);
@@ -27,7 +29,8 @@ export class HealthCheckService extends EntityService<IHealthCheckAPIData, IHeal
         // Save health check in database
         const created = await super.create(healthCheck.toDomain());
 
-        const interval = setInterval(async () => {
+        do {
+            const start = Date.now();
             // Get disk information
             const { disk, diskio } = await this.diskIOService.information();
             // Create health check in memory
@@ -45,10 +48,16 @@ export class HealthCheckService extends EntityService<IHealthCheckAPIData, IHeal
             });
             // Update health check in database every 2500ms
             await super.update(created.uuid, healthCheck.toDomain());
-        }, 2500);
+            // Get elapsed time
+            const elapsed = Date.now() - start;
+            // Time to wait
+            const waitTime = Math.max(5000 - elapsed, 0);
+            // Wait it
+            await new Promise(resolve => setTimeout(resolve, waitTime));
+        } while (!this.stopped);
 
         process.on("SIGTERM", () => {
-            clearInterval(interval);
+            this.stopped = true;
         });
     }
 }
