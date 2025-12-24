@@ -11,6 +11,16 @@
                     "type": "string",
                     "example": "7b1d2a45/1211/4517/b968/dbb6799aef6b/meme.mp4"
                 }
+            },
+            {
+                "name": "Range",
+                "in": "header",
+                "description": "Standard RFC 7233 range header",
+                "required": false,
+                "schema": {
+                    "type": "string",
+                    "example": "bytes=0-1024"
+                }
             }
         ],
         "responses": {

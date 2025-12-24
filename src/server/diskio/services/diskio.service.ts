@@ -90,7 +90,7 @@ export class DiskIOService {
         return uploaded;
     }
 
-    public async download(uuid: string) {
+    public async download(uuid: string, range?: { from: number, to?: number }) {
         // Get the file
         const file = await this.diskioFileService.get(uuid);
         // Get chunks
@@ -98,8 +98,12 @@ export class DiskIOService {
         // Create a smart file
         const diskioFileSmart = new DiskIOFileSmart(this.diskio, { chunks });
         await diskioFileSmart.ready;
+        // Complete the range
+        if (range) {
+            range.to = range.to ?? diskioFileSmart.size;
+        }
         // Create a readable stream
-        const fileStream = new DiskIOFileSmartReadable(diskioFileSmart, { highWaterMark: 16 * 1024 * 1024 });
+        const fileStream = new DiskIOFileSmartReadable(diskioFileSmart, { highWaterMark: 16 * 1024 * 1024, ...range });
         fileStream.once('end', () => {
             diskioFileSmart.close();
         });

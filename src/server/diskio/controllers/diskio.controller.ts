@@ -67,9 +67,19 @@ export class DiskIOController implements IHTTPController {
 
     public async download(request: HTTPRequest, context: IHTTPContextData) {
         try {
-            const { params: path } = request;
+            const { params: path, headers } = request;
 
-            const file = await this.diskIOService.download(path[0]);
+            let range: { from: number, to?: number } | undefined;
+
+            if (headers.range) {
+                const parts = headers.range.replace(/bytes=/, "").split("-");
+                const from = parseInt(parts[0], 10);
+                const to = parts[1] ? parseInt(parts[1], 10) : undefined;
+
+                range = { from, to };
+            }
+
+            const file = await this.diskIOService.download(path[0], range);
             // Set content length
             context.headers.push({
                 key: 'Content-Length',
