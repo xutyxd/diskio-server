@@ -6,6 +6,6 @@ import { DiskIOService } from "./services/diskio.service";
 const DiskIOContainer = new Container();
 
 DiskIOContainer.bind<DiskIOController>(DiskIOController).toSelf();
-DiskIOContainer.bind<DiskIOService>(DiskIOService).toSelf();
+DiskIOContainer.bind<DiskIOService>(DiskIOService).toSelf().inSingletonScope();
 
 export { DiskIOContainer, DiskIOController };
