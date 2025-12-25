@@ -49,9 +49,7 @@ export class DiskIOService {
         const uploaded: IDiskioFileAPIData[] = [];
 
         const onFile = async (file: Readable, information: FileInfo) => {
-            const { filename, mimeType } = information;
-            console.log('Filename: ', filename);
-            console.log('Mime type: ', mimeType);
+            const { filename } = information;
             const diskioFileSmart = new DiskIOFileSmart(this.diskio);
             await diskioFileSmart.ready;
             // Create a write stream
@@ -60,7 +58,6 @@ export class DiskIOService {
                 // Wait to be fully written
                 await pipeline(file, writeStream);
             } catch (e) {
-                console.warn('Error writing file: ', e);
                 // Try to clean up
                 await diskioFileSmart.delete();
             } finally {
