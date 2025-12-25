@@ -7,7 +7,7 @@ import { IDatabase } from "../../database/interfaces";
 @injectable()
 export class HealthCheckRepository extends EntityRepositoryService<IHealthCheckData, IHealthCheckModelData> {
     constructor(@inject('IDatabase') databaseService: IDatabase<IHealthCheckModelData>) {
-        const table = 'health_check';
+        const table = 'health-check';
         super(databaseService, table, HealthCheckModel);
     }
 }
