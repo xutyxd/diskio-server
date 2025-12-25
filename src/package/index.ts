@@ -52,8 +52,8 @@ export class DiskioAPIClient {
 
         const response = await this.client.GET('/diskio/{uuid}', { params: { path: { uuid }, header: { Range } }, parseAs: type });
         const size = response.response.headers.get('Content-Length');
-
-        return { size, stream: response.data };
+        const name = response.response.headers.get('Content-Disposition')?.split('filename=')[1];
+        return { size, stream: response.data, name };
     }
 
     public delete(uuid: string) {
