@@ -1,8 +1,10 @@
 import { inject, injectable } from 'inversify';
 import { HttpMethodEnum, HTTPRequest, IHTTPContextData, IHTTPController } from 'server-over-express';
+import { DiskIOFileSmartReadable } from 'diskio-core';
+
 import { DiskIOService } from '../services/diskio.service';
 import { NotFoundError } from '../../crosscutting/common/errors';
-import { InternalErrorResponse, NotFoundResponse } from '../../crosscutting/common/responses';
+import { InternalErrorResponse, NotFoundResponse, StreamResponse } from '../../crosscutting/common/responses';
 import { IDiskioFileAPIData } from '../../diskio-file/interfaces/data';
 import { DiskioFileService } from '../../diskio-file/services/diskio-file.service';
 import { DiskioFileAPI } from '../../diskio-file/classes';
@@ -66,6 +68,8 @@ export class DiskIOController implements IHTTPController {
     }
 
     public async download(request: HTTPRequest, context: IHTTPContextData) {
+        let response: { file: IDiskioFileAPIData, stream: DiskIOFileSmartReadable } | undefined;
+
         try {
             const { params: path, headers } = request;
 
@@ -79,16 +83,20 @@ export class DiskIOController implements IHTTPController {
                 range = { from, to };
             }
 
-            const file = await this.diskIOService.download(path[0], range);
+            response = await this.diskIOService.download(path[0], range);
+            // Set content name
+            context.headers.push({
+                key: 'Content-Disposition',
+                value: `attachment; filename="${response.file.name}"`
+            });
             // Set content length
             context.headers.push({
                 key: 'Content-Length',
-                value: file.size.toString()
+                value: response.file.size.toString()
             });
-            // Set stream for download
-            context.stream = file;
-        } catch (error) {
 
+            return new StreamResponse(response.stream, context);
+        } catch (error) {
             if (error instanceof NotFoundError) {
                 throw new NotFoundResponse(error.message, context);
             }

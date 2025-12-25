@@ -49,15 +49,24 @@ export class DiskIOService {
         const uploaded: IDiskioFileAPIData[] = [];
 
         const onFile = async (file: Readable, information: FileInfo) => {
-            const { filename } = information;
+            const { filename, mimeType } = information;
+            console.log('Filename: ', filename);
+            console.log('Mime type: ', mimeType);
             const diskioFileSmart = new DiskIOFileSmart(this.diskio);
             await diskioFileSmart.ready;
             // Create a write stream
             const writeStream = new DiskIOFileSmartWritable(diskioFileSmart, { highWaterMark: 16 * 1024 * 1024 });
-            // Wait to be fully written
-            await pipeline(file, writeStream);
-            // Close the write stream
-            await diskioFileSmart.close();
+            try {
+                // Wait to be fully written
+                await pipeline(file, writeStream);
+            } catch (e) {
+                console.warn('Error writing file: ', e);
+                // Try to clean up
+                await diskioFileSmart.delete();
+            } finally {
+                // Close the write stream
+                await diskioFileSmart.close();
+            }
             // Get the manifest
             const { chunks } = diskioFileSmart.manifest;
             // Instance every chunk
@@ -90,7 +99,7 @@ export class DiskIOService {
         return uploaded;
     }
 
-    public async download(uuid: string, range?: { from: number, to?: number }) {
+    public async download(uuid: string, range?: { from: number, to?: number }): Promise<{ file: IDiskioFileAPIData, stream: DiskIOFileSmartReadable }> {
         // Get the file
         const file = await this.diskioFileService.get(uuid);
         // Get chunks
@@ -103,12 +112,13 @@ export class DiskIOService {
             range.to = range.to ?? diskioFileSmart.size;
         }
         // Create a readable stream
-        const fileStream = new DiskIOFileSmartReadable(diskioFileSmart, { highWaterMark: 16 * 1024 * 1024, ...range });
-        fileStream.once('end', () => {
+        const stream = new DiskIOFileSmartReadable(diskioFileSmart, { highWaterMark: 16 * 1024 * 1024, ...range });
+        stream.once('end', () => {
             diskioFileSmart.close();
         });
+        const domain = new DiskioFile(file).toApi();
         // Return the stream
-        return fileStream;
+        return { file: domain, stream };
     }
 
     public async delete(uuid: string) {
