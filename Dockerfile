@@ -12,7 +12,7 @@ RUN npm run clean
 
 FROM alpine AS runner
 # Download and install Node.js
-RUN apk add --no-cache nodejs npm
+RUN apk add --no-cache nodejs npm coreutils
 
 WORKDIR /user/src/app
 
