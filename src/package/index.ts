@@ -31,8 +31,9 @@ export class DiskioAPIClient {
         }
     }
 
-    public healthCheck() {
-        return this.client.GET('/health-check');
+    public healthCheck = {
+        it: () => this.client.GET('/health-check'),
+        all: () => this.client.GET('/health-check/all')
     }
 
     public async files() {

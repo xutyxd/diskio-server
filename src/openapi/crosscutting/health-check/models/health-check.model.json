@@ -1,0 +1,96 @@
+{
+    "type": "object",
+    "properties": {
+        "uuid": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "createdAt": {
+            "type": "integer",
+            "format": "int64"
+        },
+        "updatedAt": {
+            "type": "integer",
+            "format": "int64"
+        },
+        "server": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "memory": {
+                    "type": "object",
+                    "properties": {
+                        "rss": {
+                            "type": "integer"
+                        },
+                        "heapTotal": {
+                            "type": "integer"
+                        },
+                        "heapUsed": {
+                            "type": "integer"
+                        },
+                        "external": {
+                            "type": "integer"
+                        },
+                        "arrayBuffers": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "version": {
+                    "description": "Version of the server",
+                    "example": "1.0.0",
+                    "type": "string"
+                }
+            }
+        },
+        "uptime": {
+            "type": "number"
+        },
+        "time": {
+            "type": "number"
+        },
+        "disk": {
+            "type": "object",
+            "properties": {
+                "filesystem": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "used": {
+                    "type": "integer"
+                },
+                "available": {
+                    "type": "integer"
+                },
+                "capacity": {
+                    "type": "string"
+                },
+                "mount": {
+                    "type": "string"
+                }
+            }
+        },
+        "diskio": {
+            "type": "object",
+            "properties": {
+                "size": {
+                    "type": "integer"
+                },
+                "used": {
+                    "type": "integer"
+                },
+                "available": {
+                    "type": "integer"
+                },
+                "capacity": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

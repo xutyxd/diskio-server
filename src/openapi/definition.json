@@ -25,6 +25,9 @@
         "/health-check": {
             "$ref": "./crosscutting/health-check/paths/health-check.path.json"
         },
+        "/health-check/all": {
+            "$ref": "./crosscutting/health-check/paths/health-check-all.path.json"
+        },
         "/diskio": {
             "$ref": "./diskio/paths/diskio.path.json"
         },

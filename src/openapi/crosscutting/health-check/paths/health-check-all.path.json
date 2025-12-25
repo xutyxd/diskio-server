@@ -1,9 +1,7 @@
 {
     "get": {
-        "tags": [
-            "Crosscutting"
-        ],
-        "summary": "Health check endpoint",
+        "tags": [ "Crosscutting" ],
+        "summary": "Health check list endpoint",
         "responses": {
             "200": {
                 "description": "Correct response indicating that the server is alive",
@@ -19,12 +17,13 @@
                                 },
                                 {
                                     "type": "object",
-                                    "required": [
-                                        "response"
-                                    ],
+                                    "required": ["response"],
                                     "properties": {
                                         "response": {
-                                            "$ref": "../models/health-check.model.json"
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "../models/health-check.model.json"
+                                            }
                                         }
                                     }
                                 }

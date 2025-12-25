@@ -36,7 +36,7 @@ export class HealthCheckController extends EntityController<IHealthCheckAPIData,
     private async healthCheck(request: HTTPRequest, context: IHTTPContextData) {
         // Get the last one, there should 1 by each server start
         const all = await super.list(request, context);
-        const [ healthCheck ] = all.reverse()
+        const [ healthCheck ] = all.reverse();
         // Return it
         return healthCheck;
     }

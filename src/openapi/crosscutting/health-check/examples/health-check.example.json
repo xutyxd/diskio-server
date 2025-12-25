@@ -1,5 +1,32 @@
 {
-    "code": 200,
-    "data": 1523,
-    "timestamp": 1707947871722
+    "uuid": "e2b16358-70f6-4011-977a-718739aaa06f",
+    "createdAt": 1766684576444,
+    "updatedAt": 1766687487305,
+    "server": {
+        "name": "diskio-server",
+        "memory": {
+            "rss": 94130176,
+            "heapTotal": 30113792,
+            "heapUsed": 21605456,
+            "external": 21130525,
+            "arrayBuffers": 18577892
+        },
+        "version": "1.0.0"
+    },
+    "uptime": 2916.297684914,
+    "time": 0,
+    "disk": {
+        "filesystem": "/dev/mmcblk0p2",
+        "size": 60795516,
+        "used": 6117300,
+        "available": 52154968,
+        "capacity": "11%",
+        "mount": "/app/data"
+    },
+    "diskio": {
+        "size": 1649267437568,
+        "used": 16361099,
+        "available": 1649249786229,
+        "capacity": "100%"
+    }
 }
