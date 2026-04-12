@@ -10,13 +10,13 @@ RUN npm run openapi:bundle
 RUN npm run server:build
 RUN npm run clean
 
---------
+# --------
 
 FROM alpine:3.22 AS tools
 
 RUN apk add --no-cache coreutils
 
---------
+# --------
 
 FROM xutyxd/node-quark:22 AS runner
 
