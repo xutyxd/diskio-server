@@ -56,13 +56,6 @@ class App {
     }
 
     public set = {
-        // auth: () => {
-        //     const appContainer = this.appContainer;
-        //     // Actions pre-request
-        //     const setAuthAction = appContainer.get(SetAuthAction);
-        //     // Set actions before request
-        //     this.server.request.before.add(setAuthAction);
-        // },
         database: async (database: IDatabaseStatic = MemoryDatabaseService, configuration?: unknown) => {
             const appContainer = this.appContainer;
             // Set database
@@ -84,10 +77,6 @@ class App {
             // Set memory database
             this.set.database();
         }
-        // Services
-        const configurationService = appContainer.get(ConfigurationService);
-        // Set keys for cookies
-        // httpServer.keys = (configurationService.keys.cookies()) as string[];
         // Controllers
         const healthCheckController = appContainer.get(HealthCheckController);
         const diskIOController = appContainer.get(DiskIOController);
